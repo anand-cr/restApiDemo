@@ -9,3 +9,6 @@ class Hero(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# class Villians(models.Model):
