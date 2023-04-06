@@ -16,3 +16,7 @@
    ..1. create the UserProfile Serializer
    ..2. Made the custom UserProfile and user profile manager
    ..3. Made the serializer for the user profile
+
+6. Create the Profile ViewSet
+   ..1 adding permission class
+   ..2 adding authentication and permission to the viewset

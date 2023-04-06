@@ -20,7 +20,7 @@ class UserProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = UserProfile
-        fields = ('id', 'email', 'username', 'password')
+        fields = ('id', 'email', 'name', 'password')
         extra_kwargs = {
             'password': {
                 'write_only': True,  # the password can only be used to update or create new instances, but not to retrieve existing instances
@@ -38,3 +38,12 @@ class UserProfileSerializer(serializers.ModelSerializer):
             password=validated_data['password']
         )
         return user
+
+    # NOTE: why?
+    def update(self, instance, validated_data):
+        """Handle updating user account"""
+        if 'password' in validated_data:
+            password = validated_data.pop('password')
+            instance.set_password(password)
+
+        return super().update(instance, validated_data)

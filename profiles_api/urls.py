@@ -7,7 +7,9 @@ from rest_framework.routers import DefaultRouter
 
 router = DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, basename="hello-viewset")
-router.register('profile', views.ProfileView, basename="profile")
+# only need to write basename if queryset is not there
+router.register('profile', views.UserProfileViewSet)
+
 
 urlpatterns = [
     # urls for APIView

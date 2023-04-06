@@ -3,11 +3,32 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
+from rest_framework.authentication import TokenAuthentication
+
 from profiles_api import serializers, models
 from profiles_api.models import ApiView, UserProfile
-
+from profiles_api import permissions
 
 # Create your views here.
+
+# For the profile view
+
+
+class UserProfileViewSet(viewsets.ModelViewSet):
+    """handle creating and updating profiles"""
+    serializer_class = serializers.UserProfileSerializer
+    queryset = models.UserProfile.objects.all()
+    # authentication class - mechanism of authentication
+    # permission classes - what permissions given to users
+    authentication_classes = (TokenAuthentication,)
+    permission_classes = (permissions.UpdateOwnProfile,)
+
+    # def list(self, request):
+    #     profiles = self.queryset
+    #     serializer = self.serializer_class(profiles, many=True)
+    #     return Response({"test"})
+
+  # -------------------------------------------------------------------
 
 
 class HelloApiView(APIView):
@@ -84,14 +105,3 @@ class HelloViewSet(viewsets.ViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
-class ProfileView(viewsets.ModelViewSet):
-    """handle creating and updating profiles"""
-    serializer_class = serializers.UserProfileSerializer
-    queryset = UserProfile.objects.all()
-
-    def list(self, request):
-        profiles = self.queryset
-        serializer = self.serializer_class(profiles, many=True)
-        return Response(serializer.data)
