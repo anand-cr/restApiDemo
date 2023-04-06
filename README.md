@@ -9,3 +9,10 @@
    ..2. set up views and urls
    ..3. set up curd
    ..4. set up formatter
+3. APIview
+4. Viewset
+
+5. Creating the Profile API
+   ..1. create the UserProfile Serializer
+   ..2. Made the custom UserProfile and user profile manager
+   ..3. Made the serializer for the user profile

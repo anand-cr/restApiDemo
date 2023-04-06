@@ -3,8 +3,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import viewsets
-from profiles_api import serializers
-from profiles_api.models import ApiView
+from profiles_api import serializers, models
+from profiles_api.models import ApiView, UserProfile
 
 
 # Create your views here.
@@ -84,3 +84,14 @@ class HelloViewSet(viewsets.ViewSet):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ProfileView(viewsets.ModelViewSet):
+    """handle creating and updating profiles"""
+    serializer_class = serializers.UserProfileSerializer
+    queryset = UserProfile.objects.all()
+
+    def list(self, request):
+        profiles = self.queryset
+        serializer = self.serializer_class(profiles, many=True)
+        return Response(serializer.data)
