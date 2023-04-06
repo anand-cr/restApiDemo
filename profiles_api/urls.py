@@ -7,8 +7,10 @@ from rest_framework.urlpatterns import format_suffix_patterns
 
 urlpatterns = [
     path('', views.HelloApiView.as_view()),
+    path('update/<int:id>/', views.HelloApiView.as_view()),
+    path('delete/<int:id>/', views.HelloApiView.as_view()),
 
 
 ]
 
-urlpatterns = format_suffix_patterns(urlpatterns)
+# urlpatterns = format_suffix_patterns(urlpatterns)

@@ -57,13 +57,3 @@ def Hero_details(request, id, format=None):
     elif request.method == 'DELETE':
         hero.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
-
-
-class HelloApiView(APIView):
-    """Test API View"""
-
-    def get(self, request, format=None):
-        """Returns a list of APIview features"""
-        an_apiview = [
-
-        ]
