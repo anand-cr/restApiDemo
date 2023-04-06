@@ -18,6 +18,9 @@ urlpatterns = [
     # path('delete/<int:id>/', views.HelloApiView.as_view()),
 
     # viewset
+    # The login endpoint doesn't really fit into the Create, Read, Update, Delete model that the viewsets are based on, so we create a separate endpoint for that.
+    path('login/', views.UserLoginApiView.as_view()),
+    # This includes all create read update delete
     path('', include(router.urls))
 
 ]

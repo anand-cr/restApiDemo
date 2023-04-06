@@ -5,6 +5,8 @@ from rest_framework import status
 from rest_framework import viewsets
 from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
+from rest_framework.authtoken.views import ObtainAuthToken
+from rest_framework.settings import api_settings
 
 from profiles_api import serializers, models
 from profiles_api.models import ApiView, UserProfile
@@ -31,6 +33,13 @@ class UserProfileViewSet(viewsets.ModelViewSet):
     #     profiles = self.queryset
     #     serializer = self.serializer_class(profiles, many=True)
     #     return Response({"test"})
+
+
+class UserLoginApiView(ObtainAuthToken):
+    """handle creating user authentication tokens"""
+    # This provides the ability to modify the data after we get the authentication
+    # section 11: Craete login API
+    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
 
   # -------------------------------------------------------------------
 

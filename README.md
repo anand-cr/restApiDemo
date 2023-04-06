@@ -22,3 +22,5 @@
    ..2 adding authentication and permission to the viewset
 
 7. Adding search feature/ filtering
+
+8. Added loginApi
