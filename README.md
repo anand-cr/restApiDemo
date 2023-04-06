@@ -20,3 +20,5 @@
 6. Create the Profile ViewSet
    ..1 adding permission class
    ..2 adding authentication and permission to the viewset
+
+7. Adding search feature/ filtering
