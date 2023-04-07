@@ -9,7 +9,7 @@ router = DefaultRouter()
 router.register('hello-viewset', views.HelloViewSet, basename="hello-viewset")
 # only need to write basename if queryset is not there
 router.register('profile', views.UserProfileViewSet)
-
+router.register('feed', views.ProfileFeedItemView)
 
 urlpatterns = [
     # urls for APIView
@@ -20,6 +20,7 @@ urlpatterns = [
     # viewset
     # The login endpoint doesn't really fit into the Create, Read, Update, Delete model that the viewsets are based on, so we create a separate endpoint for that.
     path('login/', views.UserLoginApiView.as_view()),
+
     # This includes all create read update delete
     path('', include(router.urls))
 

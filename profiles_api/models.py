@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.conf import settings
 # Create your models here.
 
 
@@ -68,3 +69,20 @@ class UserProfile(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         """Return string representation of our user"""
         return self.email
+
+
+class ProfileFeedItem(models.Model):
+    """Profile status feed item"""
+    # allow users to store status update associated with the person who created it
+    # connect to other models using foreign key
+    # get the model using settings instead of hardcoding the model name
+    # on_delete= cascade -> cascade the change down to remove the associated feed items ie, if we deleet the user_profile then it will delete the feeds items too
+    user_profile = models.ForeignKey(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+    status_text = models.CharField(max_length=255)
+    created_on = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        """return the model as a string"""
+        return self.status_text

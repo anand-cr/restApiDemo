@@ -7,6 +7,7 @@ from rest_framework.authentication import TokenAuthentication
 from rest_framework import filters
 from rest_framework.authtoken.views import ObtainAuthToken
 from rest_framework.settings import api_settings
+from rest_framework.permissions import IsAuthenticated
 
 from profiles_api import serializers, models
 from profiles_api.models import ApiView, UserProfile
@@ -40,6 +41,36 @@ class UserLoginApiView(ObtainAuthToken):
     # This provides the ability to modify the data after we get the authentication
     # section 11: Craete login API
     renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES
+
+
+class ProfileFeedItemView(viewsets.ModelViewSet):
+    """handles creating, reading and updating profile feed item"""
+
+    authentication_classes = (TokenAuthentication,)
+    serializer_class = serializers.ProfileFeedItemSerializer
+    queryset = models.ProfileFeedItem.objects.all()
+
+    # Thsi will add
+    # https://detecttechnologies.udemy.com/course/django-python/learn/lecture/6955156#questions/13213586
+    permission_classes = (
+        permissions.UpdateOwnStatus,
+        IsAuthenticated  # unlike the readonly this will completely restrict if not authenticated
+        # if not authenticated -> readonly #? is any authentication enough, why use this
+        # IsAuthenticatedOrReadOnly,
+
+    )
+
+    # default behavour -> when a request is made to viewset, it is passed into the serializer , validated and serialser.save() is called by default
+    # called for every HTTP post
+    # lecture 63: https://detecttechnologies.udemy.com/course/django-python/learn/lecture/6955146#questions/11360600
+    # https://detecttechnologies.udemy.com/course/django-python/learn/lecture/6955146#questions/4392484
+    # https://detecttechnologies.udemy.com/course/django-python/learn/lecture/6955146#questions/6199996
+    def perform_create(self, serializer):
+        """sets the user profile to be logged in user"""
+        # user_profile is passed in in addition to all the items in serializer
+        # if user has been authenticated, then user field will be there else an anon user
+        # NOTE: doubt
+        serializer.save(user_profile=self.request.user)
 
   # -------------------------------------------------------------------
 
